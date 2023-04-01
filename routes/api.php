@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/login', [AuthController::class, 'logIn']);
+
+/**
+ *  GROUP_ADMIN
+*/
+Route::group(['middleware' => ['authorization', 'admin']], function () {
+    Route::get('/logout', [AuthController::class, 'logOut']);
+});
+
+/**
+ *  GROUP_WAITER
+ */
+Route::group(['middleware' => ['authorization', 'waiter']], function () {
+    Route::get('/logout', [AuthController::class, 'logOut']);
+});
+
+/**
+ *  GROUP_COOK
+ */
+Route::group(['middleware' => ['authorization', 'cook']], function () {
+    Route::get('/logout', [AuthController::class, 'logOut']);
 });

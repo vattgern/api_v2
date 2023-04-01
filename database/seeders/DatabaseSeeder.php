@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +14,45 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        /**
+         * SEED_ADMINISTRATORS
+         */
+         Role::factory()->create([
+             'role_title' => 'Администратор'
+         ]);
+        Role::factory()->create([
+            'role_title' => 'Официант'
+        ]);
+        Role::factory()->create([
+            'role_title' => 'Повар'
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        /**
+         * SEED_USERS
+         */
+        User::factory()->create([
+            'login' => 'admin',
+            'password' => Hash::make('admin'),
+            'role_id' => 1,
+            'photo_file' => null,
+            'name' => 'Alex',
+        ]);
+
+        User::factory()->create([
+            'login' => 'waiter',
+            'password' => Hash::make('waiter'),
+            'role_id' => 2,
+            'photo_file' => null,
+            'name' => 'Bell',
+        ]);
+
+        User::factory()->create([
+            'login' => 'cook',
+            'password' => Hash::make('cook'),
+            'role_id' => 3,
+            'photo_file' => null,
+            'name' => 'Estrella',
+        ]);
+
     }
 }

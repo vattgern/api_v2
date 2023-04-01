@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class AuthController extends Controller
+{
+    public function logIn(LoginRequest $request):JsonResponse {
+        if (!Auth::attempt($request->all())) {
+            return response()->json([
+                "error" => [
+                    "code" => 401,
+                    "message" => "Authentication failed"
+                ]
+            ], 401, [ "Content-type" => "application/json" ]);
+        }
+        $user = Auth::user();
+        $token = $user->createToken('user_token')->plainTextToken;
+
+        return response()->json([
+            "data" => [
+                "user_token" => $token
+            ]
+        ], 200, [ "Content-type" => "application/json" ]);
+    }
+
+    public function logOut():JsonResponse {
+        auth()->user()->tokens()->delete();
+        Auth::logout();
+
+        return response()->json([
+            "data" => [
+                "message" => "logout"
+            ]
+        ], 200, [ "Content-type" => "application/json" ]);
+    }
+}

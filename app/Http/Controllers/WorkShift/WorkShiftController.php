@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\WorkShift;
 
-use App\Http\Controllers\Controller;
+use App\Http\Requests\WorkShift\WorkShiftRequest;
+use App\Http\Resources\WorkShiftResource;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class WorkShiftController extends Controller
+class WorkShiftController extends ServiceController
 {
     /**
      * Display a listing of the resource.
@@ -16,19 +18,17 @@ class WorkShiftController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(WorkShiftRequest $request):JsonResponse
     {
-        //
+        $work_shift = $this->service->store($request);
+
+        return response()->json([
+            'id' => $work_shift->id,
+            'start' => $work_shift->start,
+            'end' => $work_shift->end,
+        ], 201);
     }
 
     /**
@@ -61,5 +61,14 @@ class WorkShiftController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function open($id):JsonResponse
+    {
+        $work_shift = $this->service->open($id);
+
+        return response()->json([
+            'data' => $work_shift
+        ], 200);
     }
 }

@@ -23,7 +23,8 @@ class WorkShiftRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'start' => 'required|date_format:Y-m-d H:i',
+            'end' => 'required|date_format:Y-m-d H:i',
         ];
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,22 +18,31 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [AuthController::class, 'logIn']);
 
 /**
- *  GROUP_ADMIN
+ *  GROUP_AUTH
+ */
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('/logout', [AuthController::class, 'logOut']);
+});
+
+/**
+ *  GROUP_ADMIN_AUTH
 */
-Route::group(['middleware' => ['authorization', 'admin']], function () {
-    Route::get('/logout', [AuthController::class, 'logOut']);
+Route::group(['middleware' => ['admin', 'auth:sanctum']], function () {
+    // Операции_сотрудники
+    Route::get('/user', [UserController::class, 'index']);
+    Route::post('/user', [UserController::class, 'store']);
+    Route::get('/user/{id}', [UserController::class, 'show']);
+    Route::get('/user/{id}/to-dismiss', [UserController::class, 'destroy']);
 });
 
 /**
- *  GROUP_WAITER
+ *  GROUP_WAITER_AUTH
  */
-Route::group(['middleware' => ['authorization', 'waiter']], function () {
-    Route::get('/logout', [AuthController::class, 'logOut']);
+Route::group(['middleware' => ['waiter', 'auth:sanctum']], function () {
 });
 
 /**
- *  GROUP_COOK
+ *  GROUP_COOK_AUTH
  */
-Route::group(['middleware' => ['authorization', 'cook']], function () {
-    Route::get('/logout', [AuthController::class, 'logOut']);
+Route::group(['middleware' => ['cook', 'auth:sanctum']], function () {
 });

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\User;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,13 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'name' => 'required|string',
+            'surname' => 'string',
+            'patronymic' => 'string',
             'login' => 'required|string',
-            'password' => 'required|string'
+            'password' => 'required|string',
+            'photo_file' => 'file',
+            'role_id' => 'required|integer'
         ];
     }
 }

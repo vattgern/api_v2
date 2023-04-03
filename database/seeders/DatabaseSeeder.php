@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => 1,
             'photo_file' => null,
             'name' => 'Alex',
+            'status' => 'not working'
         ]);
 
         User::factory()->create([
@@ -44,6 +45,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => 2,
             'photo_file' => null,
             'name' => 'Bell',
+            'status' => 'not working'
         ]);
 
         User::factory()->create([
@@ -52,6 +54,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => 3,
             'photo_file' => null,
             'name' => 'Estrella',
+            'status' => 'not working'
         ]);
 
     }

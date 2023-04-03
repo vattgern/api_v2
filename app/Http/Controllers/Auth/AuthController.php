@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -32,7 +30,6 @@ class AuthController extends Controller
 
     public function logOut():JsonResponse {
         auth()->user()->tokens()->delete();
-        Auth::logout();
 
         return response()->json([
             "data" => [

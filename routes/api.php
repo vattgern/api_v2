@@ -28,7 +28,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 /**
  *  GROUP_ADMIN_AUTH
 */
-Route::group(['middleware' => ['admin', 'auth:sanctum']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     // Операции_сотрудники
     Route::get('/user', [UserController::class, 'index']);
     Route::post('/user', [UserController::class, 'store']);
@@ -37,16 +37,19 @@ Route::group(['middleware' => ['admin', 'auth:sanctum']], function () {
     // Операции_смены
     Route::post('/work-shift', [WorkShiftController::class, 'store']);
     Route::get('/work-shift/{id}/open', [WorkShiftController::class, 'open']);
+    Route::get('/work-shift/{id}/close', [WorkShiftController::class, 'close']);
+    Route::get('/work-shift', [WorkShiftController::class, 'index']);
+    Route::post('/work-shift/{id}/user', [WorkShiftController::class, 'add']);
 });
 
 /**
  *  GROUP_WAITER_AUTH
  */
-Route::group(['middleware' => ['waiter', 'auth:sanctum']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'waiter']], function () {
 });
 
 /**
  *  GROUP_COOK_AUTH
  */
-Route::group(['middleware' => ['cook', 'auth:sanctum']], function () {
+Route::group(['middleware' => ['auth:sanctum', 'cook']], function () {
 });

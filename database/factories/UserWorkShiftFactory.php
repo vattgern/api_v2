@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Shift>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserShift>
  */
-class WorkShiftFactory extends Factory
+class UserWorkShiftFactory extends Factory
 {
     /**
      * Define the model's default state.

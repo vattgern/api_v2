@@ -2,20 +2,25 @@
 
 namespace App\Services;
 
-use App\Models\ShiftUser;
-use App\Models\WorkShift;
+use App\Models\UserShift;
+use App\Models\Shift;
 use Illuminate\Database\Eloquent\Collection;
 
-class WorkShiftService
+class ShiftService
 {
     public function index(): Collection
     {
-        return WorkShift::all();
+        return Shift::all();
+    }
+
+    public function orders(): Collection
+    {
+        return Shift::all();
     }
 
     public function store($request)
     {
-        return WorkShift::create([
+        return Shift::create([
             'start' => $request['start'],
             'end' => $request['end'],
         ]);
@@ -23,7 +28,7 @@ class WorkShiftService
 
     public function open($id)
     {
-        $work_shift = WorkShift::find($id);
+        $work_shift = Shift::find($id);
         if(!$work_shift) {
             return response()->json([
                 'error' => [
@@ -49,7 +54,7 @@ class WorkShiftService
 
     public function close($id)
     {
-        $work_shift = WorkShift::find($id);
+        $work_shift = Shift::find($id);
         if(!$work_shift) {
             return response()->json([
                 'error' => [
@@ -75,10 +80,16 @@ class WorkShiftService
 
     public function add($id, $request): void
     {
-        ShiftUser::create([
+        UserShift::create([
            'user_id' => $request['user_id'],
             'shift_id' => $id
         ]);
+    }
+
+    public function delete($id, $user_id): void
+    {
+        $shift = UserShift::where('shift_id', $id);
+        $shift->users->where('id', $user_id)->first()->delete();
     }
 
 }

@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Models\ShiftUser;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class WorkShiftResource extends JsonResource
+class ShiftResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,7 +18,9 @@ class WorkShiftResource extends JsonResource
             'id' => $this->id,
             'start' => $this->start,
             'end' => $this->end,
-            'active' => $this->active
+            'active' => $this->active,
+            'workers' => $this->users,
+            'orders' => $this->orders
         ];
     }
 }

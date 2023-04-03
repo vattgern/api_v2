@@ -5,7 +5,7 @@ namespace App\Http\Requests\WorkShift;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class WorkShiftRequest extends FormRequest
+class ShiftRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

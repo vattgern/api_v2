@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shift_users', function (Blueprint $table) {
+        Schema::create('shifts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('shift_id')->constrained('work_shifts');
-            $table->foreignId('user_id')->constrained('users');
+            $table->dateTime('start');
+            $table->dateTime('end');
+            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('shift_users');
+        Schema::dropIfExists('work_shifts');
     }
 };

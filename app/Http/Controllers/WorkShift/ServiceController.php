@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\WorkShift;
 
 use App\Http\Controllers\Controller;
-use App\Services\WorkShiftService;
+use App\Services\ShiftService;
 
 class ServiceController extends Controller
 {
-    public WorkShiftService $service;
+    public ShiftService $service;
 
-    public function __construct(WorkShiftService $service){
+    public function __construct(ShiftService $service){
         $this->service = $service;
     }
 }

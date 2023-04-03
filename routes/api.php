@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\User\UserController;
-use App\Http\Controllers\WorkShift\WorkShiftController;
+use App\Http\Controllers\WorkShift\ShiftController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,11 +35,14 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     Route::get('/user/{id}', [UserController::class, 'show']);
     Route::get('/user/{id}/to-dismiss', [UserController::class, 'destroy']);
     // Операции_смены
-    Route::post('/work-shift', [WorkShiftController::class, 'store']);
-    Route::get('/work-shift/{id}/open', [WorkShiftController::class, 'open']);
-    Route::get('/work-shift/{id}/close', [WorkShiftController::class, 'close']);
-    Route::get('/work-shift', [WorkShiftController::class, 'index']);
-    Route::post('/work-shift/{id}/user', [WorkShiftController::class, 'add']);
+    Route::post('/work-shift', [ShiftController::class, 'store']);
+    Route::get('/work-shift/{id}/open', [ShiftController::class, 'open']);
+    Route::get('/work-shift/{id}/close', [ShiftController::class, 'close']);
+    Route::get('/work-shift', [ShiftController::class, 'index']);
+    Route::post('/work-shift/{id}/user', [ShiftController::class, 'add']);
+    Route::delete('/work-shift/{id}/user/{user_id}', [ShiftController::class, 'delete']);
+    // Операции_заказы
+    Route::get('/work-shift/{id}/order', [ShiftController::class, 'orders']);
 });
 
 /**

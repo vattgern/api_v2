@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\WorkShift;
 
 use App\Http\Requests\WorkShift\addUserRequest;
-use App\Http\Requests\WorkShift\WorkShiftRequest;
-use App\Http\Resources\WorkShiftResource;
+use App\Http\Requests\WorkShift\ShiftRequest;
+use App\Http\Resources\ShiftResource;
+use App\Models\Shift;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
-class WorkShiftController extends ServiceController
+class ShiftController extends ServiceController
 {
     /**
      * Display a listing of the resource.
@@ -18,14 +19,14 @@ class WorkShiftController extends ServiceController
         $work_shifts = $this->service->index();
 
         return response()->json([
-            'data' => WorkShiftResource::collection($work_shifts),
+            'data' => ShiftResource::collection($work_shifts),
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(WorkShiftRequest $request):JsonResponse
+    public function store(ShiftRequest $request):JsonResponse
     {
         $work_shift = $this->service->store($request);
 
@@ -74,7 +75,6 @@ class WorkShiftController extends ServiceController
                 ]
             ], 404);
         }
-
         $this->service->add($id, $request);
 
         return response()->json([
@@ -82,4 +82,47 @@ class WorkShiftController extends ServiceController
             'status' => 'added'
         ]);
     }
+
+    /**
+     * Delete user to shift.
+     */
+    public function delete($id, $user_id):JsonResponse
+    {
+        $shift = Shift::find($id);
+        if (!$shift) {
+            return response()->json([
+                'error' => [
+                    'code' => 404,
+                    'message' => 'Такой смены нет!'
+                ]
+            ], 404);
+        }
+        $user = User::find($user_id);
+        if (!$user) {
+            return response()->json([
+                'error' => [
+                    'code' => 404,
+                    'message' => 'Такой пользователь не в смене!'
+                ]
+            ], 404);
+        }
+        $this->service->delete($id, $user_id);
+
+        return response()->json([
+            'message' => 'Сотрудник удален из смены'
+        ]);
+    }
+
+    /**
+     * Display orders in shift.
+     */
+    public function orders(): JsonResponse
+    {
+        $work_shifts = $this->service->orders();
+
+        return response()->json([
+            'data' => ShiftResource::collection($work_shifts),
+        ]);
+    }
+
 }

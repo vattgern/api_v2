@@ -75,8 +75,18 @@ class ShiftController extends ServiceController
                 ]
             ], 404);
         }
+        $shift = Shift::find($id);
+        if (!$shift) {
+            return response()->json([
+                'error' => [
+                    'code' => 404,
+                    'message' => 'Такой смены не существует!'
+                ]
+            ], 404);
+        }
         $this->service->add($id, $request);
 
+        $user->update(['status' => 'working']);
         return response()->json([
             'id_user' => $request['user_id'],
             'status' => 'added'
@@ -107,21 +117,10 @@ class ShiftController extends ServiceController
             ], 404);
         }
         $this->service->delete($id, $user_id);
+        $user->update(['status' => 'not working']);
 
         return response()->json([
             'message' => 'Сотрудник удален из смены'
-        ]);
-    }
-
-    /**
-     * Display orders in shift.
-     */
-    public function orders(): JsonResponse
-    {
-        $work_shifts = $this->service->orders();
-
-        return response()->json([
-            'data' => ShiftResource::collection($work_shifts),
         ]);
     }
 

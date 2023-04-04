@@ -13,11 +13,6 @@ class ShiftService
         return Shift::all();
     }
 
-    public function orders(): Collection
-    {
-        return Shift::all();
-    }
-
     public function store($request)
     {
         return Shift::create([
@@ -88,8 +83,7 @@ class ShiftService
 
     public function delete($id, $user_id): void
     {
-        $shift = UserShift::where('shift_id', $id);
-        $shift->users->where('id', $user_id)->first()->delete();
+        UserShift::where('shift_id', $id)->where('user_id', $user_id)->delete();
     }
 
 }

@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shifts', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('start');
-            $table->dateTime('end');
-            $table->foreignId('order_id')->nullable()->constrained('orders')->onDelete('cascade');
-            $table->boolean('active')->default(false);
+            $table->integer('table');
+            $table->integer('number_of_person')->nullable();
             $table->timestamps();
+            $table->string('status');
+            $table->integer('price');
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('work_shifts');
+        Schema::dropIfExists('orders');
     }
 };

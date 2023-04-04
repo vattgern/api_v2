@@ -12,7 +12,7 @@ class Shift extends Model
     use HasFactory;
 
     protected $fillable = [
-      'start', 'end', 'active'
+      'start', 'end', 'active', 'shift_id'
     ];
 
     public function users(): BelongsToMany
@@ -20,9 +20,9 @@ class Shift extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function orders(): BelongsTo
+    public function orders(): BelongsToMany
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsToMany(Order::class);
     }
 
 }

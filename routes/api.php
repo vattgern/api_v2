@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WorkShift\ShiftController;
 use Illuminate\Support\Facades\Route;
@@ -42,13 +43,14 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
     Route::post('/work-shift/{id}/user', [ShiftController::class, 'add']);
     Route::delete('/work-shift/{id}/user/{user_id}', [ShiftController::class, 'delete']);
     // Операции_заказы
-    Route::get('/work-shift/{id}/order', [ShiftController::class, 'orders']);
+    Route::get('/work-shift/{id}/order', [OrderController::class, 'orders']);
 });
 
 /**
  *  GROUP_WAITER_AUTH
  */
 Route::group(['middleware' => ['auth:sanctum', 'waiter']], function () {
+    Route::post('/order', [OrderController::class, 'add_order']);
 });
 
 /**

@@ -38,13 +38,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // Роль пользователя
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
     }
 
-    // Смены пользователя
     public function shifts(): BelongsToMany
     {
         return $this->belongsToMany(Shift::class);

@@ -8,6 +8,7 @@ use App\Http\Resources\ShiftResource;
 use App\Models\Shift;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends ServiceController
 {
@@ -26,7 +27,7 @@ class OrderController extends ServiceController
         }
 
         return response()->json([
-            'data' => ShiftResource::collection($work_shift),
+            'data' => ShiftResource::collection($work_shift)
         ]);
     }
 
@@ -36,14 +37,21 @@ class OrderController extends ServiceController
     public function add_order(OrderRequest $request): JsonResponse
     {
         $work_shift = Shift::find($request['work_shift_id']);
-
         if(!$work_shift) {
             return response()->json([
                 'code' => 404,
                 'message' => 'Такой смены не существует!'
             ], 404);
         }
-
+        $workers = $work_shift->users;
+        foreach ($workers as $worker) {
+            if($worker->role_id != Auth::user()->role_id) {
+                return response()->json([
+                    'code' => 404,
+                    'message' => 'Сотрудника нет в смене!!'
+                ], 404);
+            }
+        }
         $order = $this->service->add_order($request);
 
         return response()->json([

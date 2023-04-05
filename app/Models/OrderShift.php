@@ -13,5 +13,5 @@ class OrderShift extends Model
         'order_id', 'shift_id'
     ];
 
-    protected $table = 'order_shifts';
+    protected $table = 'order_shift';
 }

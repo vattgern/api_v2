@@ -18,7 +18,6 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'table' => $this->table,
             'status' => $this->status,
-            'create_at' => $this->created_at,
             'price' => $this->price,
         ];
     }

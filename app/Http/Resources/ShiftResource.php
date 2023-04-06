@@ -20,7 +20,6 @@ class ShiftResource extends JsonResource
             'end' => $this->end,
             'active' => $this->active,
             'workers' => $this->users,
-            'orders' => $this->orders
         ];
     }
 }

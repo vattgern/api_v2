@@ -18,7 +18,9 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'table' => $this->table,
             'status' => $this->status,
-            'price' => $this->price,
+            'workers' => $this->users,
+            'positions' => $this->positions,
+            'price_all' => $this->price_all,
         ];
     }
 }

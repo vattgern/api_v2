@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Position;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -56,6 +57,27 @@ class DatabaseSeeder extends Seeder
             'name' => 'Estrella',
             'status' => 'not working'
         ]);
+        /**
+         * SEED_POSITIONS
+         */
+        Position::factory()->create([
+            'position' => 'Position 1',
+            'price' => '2000'
+        ]);
 
+        Position::factory()->create([
+            'position' => 'Position 2',
+            'price' => '8192'
+        ]);
+
+        Position::factory()->create([
+            'position' => 'Position 3',
+            'price' => '3200'
+        ]);
+
+        Position::factory()->create([
+            'position' => 'Position 4',
+            'price' => '1220'
+        ]);
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Requests\WorkShift\ShiftRequest;
 use App\Http\Resources\ShiftResource;
 use App\Models\Shift;
 use App\Models\User;
+use App\Models\UserShift;
 use Illuminate\Http\JsonResponse;
 
 class ShiftController extends ServiceController
@@ -107,7 +108,7 @@ class ShiftController extends ServiceController
                 ]
             ], 404);
         }
-        $user = User::find($user_id);
+        $user = UserShift::where('user_id', $user_id)->first();
         if (!$user) {
             return response()->json([
                 'error' => [

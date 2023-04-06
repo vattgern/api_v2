@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Order\OrderController;
+use App\Http\Controllers\Position\PositionController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WorkShift\ShiftController;
 use Illuminate\Support\Facades\Route;
@@ -51,10 +52,17 @@ Route::group(['middleware' => ['auth:sanctum', 'admin']], function () {
  */
 Route::group(['middleware' => ['auth:sanctum', 'waiter']], function () {
     Route::post('/order', [OrderController::class, 'add_order']);
+    Route::get('/order/{id}', [OrderController::class, 'show']);
+    Route::post('/order/{id}/position', [OrderController::class, 'add_position']);
+    Route::delete('/order/{id}/position/{position_id}', [OrderController::class, 'delete_position']);
+    Route::patch('/order/{id}/change-status', [OrderController::class, 'change_status']);
+    Route::get('/work-shift/{id}/order', [OrderController::class, 'index']);
 });
 
 /**
  *  GROUP_COOK_AUTH
  */
 Route::group(['middleware' => ['auth:sanctum', 'cook']], function () {
+    Route::get('/order/taken/get', [OrderController::class, 'taken']);
+    Route::patch('/order/{id}/change-status', [OrderController::class, 'change_status_cook']);
 });

@@ -4,14 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class OrderShift extends Model
+class Position extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'order_id', 'shift_id'
+      'count',
+      'position',
+      'price',
     ];
-
-    protected $table = 'order_shift';
 }

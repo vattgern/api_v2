@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AuthMiddleware;
 use App\Http\Middleware\isAdministrator;
 use App\Http\Middleware\isCook;
 use App\Http\Middleware\isWaiter;
@@ -66,6 +67,7 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'authorize' => AuthMiddleware::class,
         'admin' => isAdministrator::class,
         'waiter' => isWaiter::class,
         'cook' => isCook::class,

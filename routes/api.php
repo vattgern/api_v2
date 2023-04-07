@@ -18,12 +18,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', [AuthController::class, 'logIn']);
+Route::post('/login', [AuthController::class, 'logIn'])->name('login');
+Route::get('/unauthorization', [AuthController::class, 'unauthorization'])->name('unauthorization');
 
 /**
  *  GROUP_AUTH
  */
-Route::group(['middleware' => 'auth:sanctum'], function () {
+Route::group(['middleware' => ['authorize', 'auth:sanctum']], function () {
     Route::get('/logout', [AuthController::class, 'logOut']);
 });
 

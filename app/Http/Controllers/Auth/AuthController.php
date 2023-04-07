@@ -37,4 +37,13 @@ class AuthController extends Controller
             ]
         ], 200, [ "Content-type" => "application/json" ]);
     }
+
+    public function unauthorization():JsonResponse {
+        return response()->json([
+            'error' => [
+                'code' => 403,
+                'message' => 'Forbidden!'
+            ]
+        ], 403, [ "Content-type" => "application/json" ]);
+    }
 }
